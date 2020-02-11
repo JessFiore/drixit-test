@@ -5,52 +5,35 @@ import {
 } from 'recharts';
 import data from '../../services/mock.json'
 
+// class Graphics extends React.PureComponent {
 
-class Graphics extends React.PureComponent {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <BarChart
-        width={800}
-        height={300}
-        data={data}
-        margin={{
-          top: 20, right: 30, left: 20, bottom: 5,
-        }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Bar name="Aceleracion Baja Int" dataKey="bar1" stackId="a" fill="#8884d8" />
-        <Bar name="Aceleracion Baja Media" dataKey="bar2" stackId="a" fill="#82ca9d" />
-        <Bar name="Aceleracion Baja Alta" dataKey="bar3" fill="#ffc658" />
-      </BarChart>
-    );
-  }
-}
+//   render() {
+//     return (
+//       <BarChart
+//         width={800}
+//         height={300}
+//         data={data}
+//         margin={{
+//           top: 20, right: 30, left: 20, bottom: 5,
+//         }}
+//       >
+//         <CartesianGrid strokeDasharray="3 3" />
+//         <XAxis dataKey="name" />
+//         <YAxis />
+//         <Tooltip />
+//         <Legend />
+//         <Bar name="Aceleracion Baja Int" dataKey="bar1" stackId="a" fill="#8884d8" />
+//         <Bar name="Aceleracion Baja Media" dataKey="bar2" stackId="a" fill="#82ca9d" />
+//         <Bar name="Aceleracion Baja Alta" dataKey="bar3" fill="#ffc658" />
+//       </BarChart>
+//     );
+//   }
+// }
 
 class Table extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      graphicData: [],
-    }
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
-
-  handleInputChange(event) {
-    const { target } = event
-    const { value } = target
-    const filteredData = this.props.data.filter(data => data.username === value);
-    
-    { console.log(filteredData) }
-    // this.setState({graphicData: [].concat(filteredData)});
+    this.handleChange = this.handleChange.bind(this);
   }
 
   render() {
@@ -74,7 +57,8 @@ class Table extends React.Component {
               <td>
                 <input
                   type="checkbox"
-                  onChange={this.handleInputChange}
+                  checked={this.props.isChecked}
+                  onChange={this.props.handleChange}
                   value={row.username}
                 />
               </td>
@@ -97,11 +81,28 @@ class Table extends React.Component {
 }
 
 
-export default function Home() {
-  return (
-    <div className="container">
-      <Graphics />
-      <Table data={data} />
-    </div>
-  );
+class Home extends React.Component() {
+  constructor() {
+    super();
+    this.state = {
+      isChecked: false,
+      graphicData: []
+    };
+    this.handleChange = this.handleChange.bind(this);
+  }
+
+  handleChange(e) {
+    const { target } = e
+    const { value } = target
+    this.setState({ isChecked: !this.state.isChecked });
+    const filteredData = this.props.data.filter(data => data.username === value);
+  }
+
+  //   // { console.log(filteredData) }
+  //   // this.setState({graphicData: [].concat(filteredData)});
+
+  render() {
+    return <Table data={data} handleChange={this.handleChange} />;
+  }
 }
+export default Home;
