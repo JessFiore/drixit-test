@@ -1,9 +1,11 @@
 import React from 'react'
 // import './styles.sass'
-import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
-} from 'recharts';
+// import {
+//   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
+// } from 'recharts';
+import Table from './table'
 import data from '../../services/mock.json'
+
 
 // class Graphics extends React.PureComponent {
 
@@ -30,74 +32,23 @@ import data from '../../services/mock.json'
 //   }
 // }
 
-class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleChange = this.handleChange.bind(this);
-  }
-
-  render() {
-    return (
-      <table>
-        <thead>
-          <tr>
-            <th>  </th>
-            <th> Name </th>
-            <th> acc6 </th>
-            <th> acc6% </th>
-            <th> acc7 </th>
-            <th> acc7% </th>
-            <th> acc8 </th>
-            <th> acc8% </th>
-          </tr>
-        </thead>
-        <tbody>
-          {this.props.data.map(row => (
-            <tr key={row.username}>
-              <td>
-                <input
-                  type="checkbox"
-                  checked={this.props.isChecked}
-                  onChange={this.props.handleChange}
-                  value={row.username}
-                />
-              </td>
-              <td>
-                {row.name}
-              </td>
-              <td>{row.acc6}</td>
-              <td>{row['acc6%']}</td>
-              <td>{row.acc7}</td>
-              <td>{row['acc7%']}</td>
-              <td>{row.acc8}</td>
-              <td>{row['acc8%']}</td>
-            </tr>
-          ))
-                  }
-        </tbody>
-      </table>
-    )
-  }
-}
-
-
 class Home extends React.Component() {
   constructor() {
     super();
     this.state = {
-      isChecked: false,
+      checkedItems: new Map(),
       graphicData: []
-    };
+    }
+    
     this.handleChange = this.handleChange.bind(this);
   }
 
   handleChange(e) {
-    const { target } = e
-    const { value } = target
-    this.setState({ isChecked: !this.state.isChecked });
-    const filteredData = this.props.data.filter(data => data.username === value);
+    const item = e.target.value;
+    const isChecked = e.target.checked;
+    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
   }
-
+  // const filteredData = this.props.data.filter(data => data.username === value);
   //   // { console.log(filteredData) }
   //   // this.setState({graphicData: [].concat(filteredData)});
 
