@@ -37,9 +37,9 @@ class Home extends React.Component() {
     super();
     this.state = {
       checkedItems: new Map(),
-      graphicData: []
+      extendedData:[checked:false]
     }
-    
+
     this.handleChange = this.handleChange.bind(this);
   }
 
@@ -47,13 +47,23 @@ class Home extends React.Component() {
     const item = e.target.value;
     const isChecked = e.target.checked;
     this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
+
+    const update = data.map(player => {
+      if (player.username === item ){
+        ...player,
+        checked: isChecked,
+      }
+    });
+
+    this.setState({extendedData: update});
   }
+  
   // const filteredData = this.props.data.filter(data => data.username === value);
   //   // { console.log(filteredData) }
   //   // this.setState({graphicData: [].concat(filteredData)});
 
   render() {
-    return <Table data={data} handleChange={this.handleChange} />;
+    return <Table data={data} handleChange={this.handleChange} {...this.state}/>;
   }
 }
 export default Home;
