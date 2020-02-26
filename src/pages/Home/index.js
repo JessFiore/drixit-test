@@ -36,34 +36,35 @@ class Home extends React.Component() {
   constructor() {
     super();
     this.state = {
-      checkedItems: new Map(),
-      extendedData:[checked:false]
-    }
+      extendedData: data.map(player => ({
+        ...player,
+        checked: false,
+      })),
+    };
 
-    this.handleChange = this.handleChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
-  handleChange(e) {
+  onChange(e) {
+    const { extendedData } = this.state;
     const item = e.target.value;
     const isChecked = e.target.checked;
-    this.setState(prevState => ({ checkedItems: prevState.checkedItems.set(item, isChecked) }));
-
-    const update = data.map(player => {
-      if (player.username === item ){
-        ...player,
-        checked: isChecked,
+    const update = extendedData.map((player) => {
+      if (player.username === item ) {
+        return {
+          ...player,
+          checked: isChecked,
+        };
       }
+      return player;
     });
 
-    this.setState({extendedData: update});
+    this.setState({ extendedData: update });
   }
-  
-  // const filteredData = this.props.data.filter(data => data.username === value);
-  //   // { console.log(filteredData) }
-  //   // this.setState({graphicData: [].concat(filteredData)});
 
   render() {
-    return <Table data={data} handleChange={this.handleChange} {...this.state}/>;
+    const { extendedData } = this.state;
+    return <Table data={extendedData} onChange={this.onChange} />;
   }
 }
 export default Home;

@@ -4,7 +4,7 @@ import Checkbox from './checkbox';
 export default class Table extends React.Component {
   constructor(props) {
     super(props);
-    this.handleChange = this.handleChange.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   render() {
@@ -31,7 +31,7 @@ export default class Table extends React.Component {
                     type="checkbox"
                     value={row.username}
                     checked={this.props.isChecked}
-                    onChange={this.props.handleChange}
+                    onChange={this.props.onChange}
                   />
                 </label>
               </td>
