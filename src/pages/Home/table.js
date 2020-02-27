@@ -1,13 +1,11 @@
 import React from 'react'
+import PropTypes from 'prop-types';
 import Checkbox from './checkbox';
 
-export default class Table extends React.Component {
-  constructor(props) {
-    super(props);
-    this.onChange = this.onChange.bind(this);
-  }
 
+export default class Table extends React.Component {
   render() {
+    const { onChange, tableData } = this.props;
     return (
       <table>
         <thead>
@@ -23,17 +21,15 @@ export default class Table extends React.Component {
           </tr>
         </thead>
         <tbody>
-          {this.props.data.map(row => (
+          {tableData.map(row => (
             <tr key={row.username}>
               <td>
-                <label>
-                  <Checkbox
-                    type="checkbox"
-                    value={row.username}
-                    checked={this.props.isChecked}
-                    onChange={this.props.onChange}
-                  />
-                </label>
+                <Checkbox
+                  type="checkbox"
+                  value={row.username}
+                  checked={row.checked}
+                  onChange={onChange}
+                />
               </td>
               <td>
                 {row.name}
@@ -51,4 +47,8 @@ export default class Table extends React.Component {
       </table>
     )
   }
+}
+Table.propTypes = {
+  tableData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
+  onChange: PropTypes.func.isRequired,
 }

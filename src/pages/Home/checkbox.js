@@ -6,8 +6,10 @@ const Checkbox = ({ type = 'checkbox', value, checked = false, onChange }) => (
 );
 
 Checkbox.propTypes = {
+  // eslint-disable-next-line react/require-default-props
   type: PropTypes.string,
   value: PropTypes.string.isRequired,
+  // eslint-disable-next-line react/require-default-props
   checked: PropTypes.bool,
   onChange: PropTypes.func.isRequired,
 }
