@@ -66,12 +66,15 @@ class Home extends React.Component {
 
   render() {
     const { extendedData } = this.state;
-    const filteredData = extendedData.filter((player) => {
+    let filteredData = extendedData.filter((player) => {
       if (player.checked !== false) {
         return true;
       }
       return false;
     })
+    if (Object.keys(filteredData).length === 0) {
+      filteredData = extendedData;
+    }
     return (
       <div className="container">
         <Graphics graphicData={filteredData} />
