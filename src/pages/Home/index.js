@@ -41,10 +41,13 @@ class Home extends React.Component {
       extendedData: data.map(player => ({
         ...player,
         checked: false,
+        direction: {
+          acc6: 'asc',
+        },
       })),
     };
-    this.onClick = this.onClick.bind(this);
     this.onChange = this.onChange.bind(this);
+    this.onClick = this.onClick.bind(this);
   }
 
   onChange(e) {
@@ -63,52 +66,24 @@ class Home extends React.Component {
     this.setState({ extendedData: update });
   }
 
-  onClick(e) {
+  onClick(key) {
     const { extendedData } = this.state;
-    const item = e.target.value;
-    if (item === 'desc') {
-      console.log(item)
-      const sortByDesc = extendedData.map((player) => {
-        let min; let max;
-        // if (player.bar1 > player.bar2 && player.bar1 > player.bar3) {
-        //   const max = player.bar1;
-        //   if (player.bar2 > player.bar3) {
-        //     const min = player.bar3;
-        //   } const min = player.bar2;
-        //   player.bar2 = max;
-        //   player.bar1 = player.bar3;
-        //   player.bar3 = min;
-        // }
-        if (player.bar2 > player.bar1 && player.bar2 > player.bar3) {
-          max = player.bar2;
-          if (player.bar1 > player.bar3) {
-            min = player.bar3;
-            return {
-              ...player,
-              bar2: player.bar1,
-              bar1: max,
-            };
-            // console.log(player.bar1)
-            // console.log(player.bar2)
-            // console.log(player.bar3)
-          } min = player.bar1;
-          player.bar2 = player.bar3;
-          player.bar3 = min;
-          player.bar1 = max;
-        }
-        // if (player.bar3 > player.bar1 && player.bar3 > player.bar2) {
-        //   const max = player.bar3;
-        //   if (player.bar2 > player.bar1) {
-        //     const min = player.bar1;
-        //   } const min = player.bar2;
-        // }
-      });
-      this.setState({ extendedData: sortByDesc });
-    }
-    // if (item === 'asc') {
-    // }
-  }
+    this.setState({
+      extendedData: extendedData.sort((a, b) => (
+        extendedData.direction[key] === 'asc'
+          ? a[key] - b[key]
+          : b[key] - b[key]
+      )),
+    })
 
+    // Funciona, al metodo onClick hay que sacarle el parametro key y cambiar en el table el onClick={onClick}
+
+    // const { extendedData } = this.state;
+    // const sortByAsc = extendedData.sort((prev, next) => {
+    //   return prev.acc6 - next.acc6;
+    // });
+    // this.setState({ extendedData: sortByAsc });
+  }
 
   render() {
     const { extendedData } = this.state;
@@ -121,7 +96,6 @@ class Home extends React.Component {
     if (filteredData.length === 0) {
       filteredData = extendedData;
     }
-    // console.log(filteredData)
     return (
       <div className="container">
         <Graphics graphicData={filteredData} />

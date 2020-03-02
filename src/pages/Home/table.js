@@ -9,19 +9,43 @@ export default class Table extends React.Component {
     const { onChange, tableData, onClick } = this.props;
     return (
       <div>
-        <button type="button" value="asc" onClick={onClick}> ASC</button>
-        <button type="button" value="desc" onClick={onClick}> DESC </button>
+        {/* <button type="button" value="asc" onClick={onClick}> ASC</button>
+        <button type="button" value="desc" onClick={onClick}> DESC </button> */}
         <table>
           <thead>
             <tr>
               <th>  </th>
               <th> Name </th>
-              <th> acc6 </th>
-              <th> acc6% </th>
-              <th> acc7 </th>
-              <th> acc7% </th>
-              <th> acc8 </th>
-              <th> acc8% </th>
+              <th>
+                <button type="button" onClick={() => tableData.onClick('acc6')}>
+                  acc6
+                </button>
+              </th>
+              <th>
+                <button type="button">
+                  acc6%
+                </button>
+              </th>
+              <th>
+                <button type="button">
+                  acc7
+                </button>
+              </th>
+              <th>
+                <button type="button">
+                  acc7%
+                </button>
+              </th>
+              <th>
+                <button type="button">
+                  acc8
+                </button>
+              </th>
+              <th>
+                <button type="button">
+                  acc8%
+                </button>
+              </th>
             </tr>
           </thead>
           <tbody>
