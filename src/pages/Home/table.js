@@ -1,20 +1,29 @@
 import React from 'react'
 import PropTypes from 'prop-types';
-// import ButtonGroup from './buttonGroup';
 import Checkbox from './checkbox';
 
 
 export default class Table extends React.Component {
   render() {
-    const { onChange, tableData, onClick } = this.props;
+    const { onChange, tableData, onClick, handleChange } = this.props;
     return (
       <div>
         {/* <button type="button" value="asc" onClick={onClick}> ASC</button>
         <button type="button" value="desc" onClick={onClick}> DESC </button> */}
+        <form>
+          <label>Nombre del jugador:</label>
+          <input
+            type="text"
+            name="name"
+            value={tableData.name}
+            onChange={handleChange}
+          />
+          {/* <input type="button" value="Enviar" onClick={} /> */}
+        </form>
         <table>
           <thead>
             <tr>
-              <th>  </th>
+              <th> </th>
               <th> Name </th>
               <th>
                 {/* No me reconoce el onClick como funcion */}
@@ -82,4 +91,6 @@ Table.propTypes = {
   tableData: PropTypes.arrayOf(PropTypes.shape({})).isRequired,
   onChange: PropTypes.func.isRequired,
   onClick: PropTypes.func.isRequired,
+  // eslint-disable-next-line react/require-default-props
+  handleChange: PropTypes.func,
 }

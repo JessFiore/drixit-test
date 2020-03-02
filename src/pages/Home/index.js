@@ -48,6 +48,7 @@ class Home extends React.Component {
     };
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   onChange(e) {
@@ -73,11 +74,10 @@ class Home extends React.Component {
         // No se si esta bien indicarle asi
         extendedData.direction[key] === 'asc'
           ? a[key] - b[key]
-          : b[key] - b[key]
+          : b[key] - a[key]
       )),
     })
-
-    // Funciona, al metodo onClick hay que sacarle el parametro key y cambiar en el table.js el onClick={onClick} 
+    // Funciona, al metodo onClick hay que sacarle el parametro key y cambiar en el table.js el onClick={onClick}
     // const { extendedData } = this.state;
     // const sortByAsc = extendedData.sort((prev, next) => {
     //   return prev.acc6 - next.acc6;
@@ -91,6 +91,18 @@ class Home extends React.Component {
     //   return prev.item - next.item;
     // });
     // this.setState({ extendedData: sortByAsc });
+  }
+
+  handleChange(e) {
+    const { extendedData } = this.state;
+    const item = e.target.value;
+    const update = extendedData.filter((player) => {
+      if (player.name === item) {
+        return true;
+      }
+      return player;
+    });
+    this.setState({ extendedData: update });
   }
 
   render() {
