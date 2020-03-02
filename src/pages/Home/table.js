@@ -17,6 +17,7 @@ export default class Table extends React.Component {
               <th>  </th>
               <th> Name </th>
               <th>
+                {/* No me reconoce el onClick como funcion */}
                 <button type="button" onClick={() => tableData.onClick('acc6')}>
                   acc6
                 </button>

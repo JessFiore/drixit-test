@@ -70,17 +70,25 @@ class Home extends React.Component {
     const { extendedData } = this.state;
     this.setState({
       extendedData: extendedData.sort((a, b) => (
+        // No se si esta bien indicarle asi
         extendedData.direction[key] === 'asc'
           ? a[key] - b[key]
           : b[key] - b[key]
       )),
     })
 
-    // Funciona, al metodo onClick hay que sacarle el parametro key y cambiar en el table el onClick={onClick}
-
+    // Funciona, al metodo onClick hay que sacarle el parametro key y cambiar en el table.js el onClick={onClick} 
     // const { extendedData } = this.state;
     // const sortByAsc = extendedData.sort((prev, next) => {
     //   return prev.acc6 - next.acc6;
+    // });
+    // this.setState({ extendedData: sortByAsc });
+
+    // Como yo queria hacerlo pero no me reconoce el item dentro del return
+    // const item = e.target.value;
+    // const { extendedData } = this.state;
+    // const sortByAsc = extendedData.sort((prev, next) => {
+    //   return prev.item - next.item;
     // });
     // this.setState({ extendedData: sortByAsc });
   }
