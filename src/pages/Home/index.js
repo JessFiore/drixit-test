@@ -51,6 +51,7 @@ class Home extends React.Component {
         acc8: 'asc',
         acc8p: 'asc',
       },
+      // fileName: 'players',
     }
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
@@ -94,12 +95,13 @@ class Home extends React.Component {
     const { players } = this.state;
     const item = e.target.value;
     const update = players.map((player) => {
-      if (player.name === item) {
+      if (player.name.includes(item)) {
         return {
+          ...player,
           show: true,
-        };
-      }
-      return {
+        }
+      } return {
+        ...player,
         show: false,
       }
     });
