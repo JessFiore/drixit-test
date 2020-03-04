@@ -8,17 +8,15 @@ export default class Table extends React.Component {
     const { onChange, tableData, onClick, handleChange } = this.props;
     return (
       <div>
-        {/* <button type="button" value="asc" onClick={onClick}> ASC</button>
-        <button type="button" value="desc" onClick={onClick}> DESC </button> */}
         <form>
-          <label>Nombre del jugador:</label>
           <input
             type="text"
             name="name"
+            placeholder="Ingrese nombre del jugador"
             value={tableData.name}
             onChange={handleChange}
           />
-          {/* <input type="button" value="Enviar" onClick={} /> */}
+          <input type="button" value="Enviar" onClick={() => handleChange} />
         </form>
         <table>
           <thead>
@@ -26,61 +24,64 @@ export default class Table extends React.Component {
               <th> </th>
               <th> Name </th>
               <th>
-                {/* No me reconoce el onClick como funcion */}
-                <button type="button" onClick={() => tableData.onClick('acc6')}>
+                <button type="button" onClick={() => onClick('acc6')}>
                   acc6
                 </button>
               </th>
               <th>
-                <button type="button">
+                <button type="button" onClick={() => onClick('acc6%')}>
                   acc6%
                 </button>
               </th>
               <th>
-                <button type="button">
+                <button type="button" onClick={() => onClick('acc7')}>
                   acc7
                 </button>
               </th>
               <th>
-                <button type="button">
+                <button type="button" onClick={() => onClick('acc7%')}>
                   acc7%
                 </button>
               </th>
               <th>
-                <button type="button">
+                <button type="button" onClick={() => onClick('acc8')}>
                   acc8
                 </button>
               </th>
               <th>
-                <button type="button">
+                <button type="button" onClick={() => onClick('acc8%')}>
                   acc8%
                 </button>
               </th>
             </tr>
           </thead>
           <tbody>
-            {tableData.map(row => (
-              <tr key={row.username}>
-                <td>
-                  <Checkbox
-                    type="checkbox"
-                    value={row.username}
-                    checked={row.checked}
-                    onChange={onChange}
-                  />
-                </td>
-                <td>
-                  {row.name}
-                </td>
-                <td>{row.acc6}</td>
-                <td>{row['acc6%']}</td>
-                <td>{row.acc7}</td>
-                <td>{row['acc7%']}</td>
-                <td>{row.acc8}</td>
-                <td>{row['acc8%']}</td>
-              </tr>
-            ))
-                      }
+            {tableData.map((row) => {
+              if (row.show === true) {
+                return (
+                  <tr key={row.username}>
+                    <td>
+                      <Checkbox
+                        type="checkbox"
+                        value={row.username}
+                        checked={row.checked}
+                        onChange={onChange}
+                      />
+                    </td>
+                    <td>
+                      {row.name}
+                    </td>
+                    <td>{row.acc6}</td>
+                    <td>{row['acc6%']}</td>
+                    <td>{row.acc7}</td>
+                    <td>{row['acc7%']}</td>
+                    <td>{row.acc8}</td>
+                    <td>{row['acc8%']}</td>
+                  </tr>
+                )
+              } return true
+            })
+          }
           </tbody>
         </table>
       </div>

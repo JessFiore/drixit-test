@@ -38,24 +38,30 @@ class Home extends React.Component {
   constructor() {
     super();
     this.state = {
-      extendedData: data.map(player => ({
+      players: data.map(player => ({
         ...player,
         checked: false,
-        direction: {
-          acc6: 'asc',
-        },
+        show: true,
       })),
-    };
+      direction: {
+        acc6: 'asc',
+        acc6p: 'asc',
+        acc7: 'asc',
+        acc7p: 'asc',
+        acc8: 'asc',
+        acc8p: 'asc',
+      },
+    }
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
   }
 
   onChange(e) {
-    const { extendedData } = this.state;
+    const { players } = this.state;
     const item = e.target.value;
     const isChecked = e.target.checked;
-    const update = extendedData.map((player) => {
+    const update = players.map((player) => {
       if (player.username === item) {
         return {
           ...player,
@@ -64,62 +70,57 @@ class Home extends React.Component {
       }
       return player;
     });
-    this.setState({ extendedData: update });
+    this.setState({ players: update });
   }
 
   onClick(key) {
-    const { extendedData } = this.state;
+    const { players } = this.state;
+    const { direction } = this.state;
     this.setState({
-      extendedData: extendedData.sort((a, b) => (
-        // No se si esta bien indicarle asi
-        extendedData.direction[key] === 'asc'
+      players: players.sort((a, b) => (
+        direction[key] === 'asc'
           ? a[key] - b[key]
           : b[key] - a[key]
       )),
+      direction: {
+        [key]: direction[key] === 'asc'
+          ? 'desc'
+          : 'asc',
+      },
     })
-    // Funciona, al metodo onClick hay que sacarle el parametro key y cambiar en el table.js el onClick={onClick}
-    // const { extendedData } = this.state;
-    // const sortByAsc = extendedData.sort((prev, next) => {
-    //   return prev.acc6 - next.acc6;
-    // });
-    // this.setState({ extendedData: sortByAsc });
-
-    // Como yo queria hacerlo pero no me reconoce el item dentro del return
-    // const item = e.target.value;
-    // const { extendedData } = this.state;
-    // const sortByAsc = extendedData.sort((prev, next) => {
-    //   return prev.item - next.item;
-    // });
-    // this.setState({ extendedData: sortByAsc });
   }
 
   handleChange(e) {
-    const { extendedData } = this.state;
+    const { players } = this.state;
     const item = e.target.value;
-    const update = extendedData.filter((player) => {
+    const update = players.map((player) => {
       if (player.name === item) {
-        return true;
+        return {
+          show: true,
+        };
       }
-      return player;
+      return {
+        show: false,
+      }
     });
-    this.setState({ extendedData: update });
+    this.setState({ players: update });
   }
 
   render() {
-    const { extendedData } = this.state;
-    let filteredData = extendedData.filter((player) => {
+    const { players } = this.state;
+    let filteredData = players.filter((player) => {
       if (player.checked !== false) {
         return true;
       }
       return false;
     })
     if (filteredData.length === 0) {
-      filteredData = extendedData;
+      filteredData = players;
     }
     return (
       <div className="container">
         <Graphics graphicData={filteredData} />
-        <Table tableData={extendedData} onChange={this.onChange} onClick={this.onClick} />
+        <Table tableData={players} onChange={this.onChange} onClick={this.onClick} onChangeInput={this.handleChange} />
       </div>
     )
   }
