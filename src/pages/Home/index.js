@@ -122,18 +122,20 @@ class Home extends React.Component {
     for (const row of csvDataFile) {
       const values = headers.map(header => row[header]);
       csvRows.push(values.join(','));
+      // console.log(values)
+      // console.log(csvRows)
     }
-    csvRows.join('\n')
-    console.log(csvRows)
-    // const blob = new Blob([csvRows], { type: 'text/csv' });
-    // const url = window.URL.createObjectURL(blob);
-    // const a = document.createElement('a');
-    // a.setAttribute('hidden', '');
-    // a.setAttribute('href', url);
-    // a.setAttribute('download', 'download.csv');
-    // document.body.appendChild(a);
-    // a.click();
-    // document.body.removeChild(a);
+    const csvfile = csvRows.join('\n')
+    // console.log(csvfile)
+    const blob = new Blob([csvfile], { type: 'text/csv' });
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'download.csv');
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
   }
 
   render() {
