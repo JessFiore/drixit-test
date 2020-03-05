@@ -5,7 +5,7 @@ import Checkbox from './checkbox';
 
 export default class Table extends React.Component {
   render() {
-    const { onChange, tableData, onClick, onChangeInput, csvData, exportCSV } = this.props;
+    const { onChange, tableData, onClick, onChangeInput, exportCSV } = this.props;
     return (
       <div>
         <form>
@@ -17,7 +17,7 @@ export default class Table extends React.Component {
             onChange={onChangeInput}
           />
         </form>
-        <button type="button" onClick={() => exportCSV(csvData)}> Exportar </button>
+        <button type="button" onClick={exportCSV}> Exportar </button>
         <table>
           <thead>
             <tr>
@@ -94,8 +94,6 @@ Table.propTypes = {
   onClick: PropTypes.func.isRequired,
   // eslint-disable-next-line react/require-default-props
   onChangeInput: PropTypes.func,
-  // eslint-disable-next-line react/require-default-props
-  csvData: PropTypes.arrayOf(PropTypes.shape({})),
   // eslint-disable-next-line react/require-default-props
   exportCSV: PropTypes.func,
 }

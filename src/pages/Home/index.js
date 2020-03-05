@@ -101,7 +101,15 @@ class Home extends React.Component {
   }
 
   // eslint-disable-next-line class-methods-use-this
-  exportCSVFile(dataFile) {
+  exportCSVFile() {
+    const { players } = this.state;
+    let dataFile = [];
+    dataFile = players.filter((player) => {
+      if (player.checked !== false) {
+        return true;
+      }
+      return false;
+    })
     const csvDataFile = dataFile.map(row => ({
       name: row.name,
       acc6: row.acc6,
