@@ -105,7 +105,7 @@ class Home extends React.Component {
     const { players } = this.state;
     let dataFile = [];
     dataFile = players.filter((player) => {
-      if (player.checked !== false) {
+      if (player.checked !== false && player.show === true) {
         return true;
       }
       return false;
