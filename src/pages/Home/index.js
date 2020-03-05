@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 import Table from './table'
 import data from '../../services/mock.json'
 
-
 class Graphics extends React.PureComponent {
   render() {
     const { graphicData } = this.props;
@@ -51,11 +50,11 @@ class Home extends React.Component {
         acc8: 'asc',
         acc8p: 'asc',
       },
-      // fileName: 'players',
     }
     this.onChange = this.onChange.bind(this);
     this.onClick = this.onClick.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.exportCSVFile = this.exportCSVFile.bind(this);
   }
 
   onChange(e) {
@@ -94,18 +93,47 @@ class Home extends React.Component {
   handleChange(e) {
     const { players } = this.state;
     const item = e.target.value;
-    const update = players.map((player) => {
-      if (player.name.includes(item)) {
-        return {
-          ...player,
-          show: true,
-        }
-      } return {
-        ...player,
-        show: false,
-      }
-    });
+    const update = players.map(player => ({
+      ...player,
+      show: player.name.includes(item),
+    }));
     this.setState({ players: update });
+  }
+
+  // eslint-disable-next-line class-methods-use-this
+  exportCSVFile(dataFile) {
+    const csvDataFile = dataFile.map(row => ({
+      name: row.name,
+      acc6: row.acc6,
+      acc6p: row['acc6%'],
+      acc7: row.acc7,
+      acc7p: row['acc7%'],
+      acc8: row.acc8,
+      acc8p: row['acc8%'],
+    }));
+    const csvRows = [];
+    // console.log(csvDataFile)
+    // get the headers
+    const headers = Object.keys(csvDataFile[0]);
+    csvRows.push(headers.join(','));
+    // console.log(csvRows);
+    // loop over the rows
+    // eslint-disable-next-line no-restricted-syntax
+    for (const row of csvDataFile) {
+      const values = headers.map(header => row[header]);
+      csvRows.push(values.join(','));
+    }
+    csvRows.join('\n')
+    console.log(csvRows)
+    // const blob = new Blob([csvRows], { type: 'text/csv' });
+    // const url = window.URL.createObjectURL(blob);
+    // const a = document.createElement('a');
+    // a.setAttribute('hidden', '');
+    // a.setAttribute('href', url);
+    // a.setAttribute('download', 'download.csv');
+    // document.body.appendChild(a);
+    // a.click();
+    // document.body.removeChild(a);
   }
 
   render() {
@@ -122,7 +150,14 @@ class Home extends React.Component {
     return (
       <div className="container">
         <Graphics graphicData={filteredData} />
-        <Table tableData={players} onChange={this.onChange} onClick={this.onClick} onChangeInput={this.handleChange} />
+        <Table
+          tableData={players}
+          onChange={this.onChange}
+          onClick={this.onClick}
+          onChangeInput={this.handleChange}
+          csvData={filteredData}
+          exportCSV={this.exportCSVFile}
+        />
       </div>
     )
   }

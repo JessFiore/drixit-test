@@ -1,12 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types';
 import Checkbox from './checkbox';
-// import { ExportReactCSV } from './exportReactCSV'
 
 
 export default class Table extends React.Component {
   render() {
-    const { onChange, tableData, onClick, onChangeInput } = this.props;
+    const { onChange, tableData, onClick, onChangeInput, csvData, exportCSV } = this.props;
     return (
       <div>
         <form>
@@ -17,9 +16,8 @@ export default class Table extends React.Component {
             value={tableData.name}
             onChange={onChangeInput}
           />
-          <input type="button" value="Enviar" onClick={() => onChangeInput} />
         </form>
-        {/* <ExportReactCSV csvData={tableData} fileName={tableData.fileName} /> */}
+        <button type="button" onClick={() => exportCSV(csvData)}> Exportar </button>
         <table>
           <thead>
             <tr>
@@ -96,4 +94,8 @@ Table.propTypes = {
   onClick: PropTypes.func.isRequired,
   // eslint-disable-next-line react/require-default-props
   onChangeInput: PropTypes.func,
+  // eslint-disable-next-line react/require-default-props
+  csvData: PropTypes.arrayOf(PropTypes.shape({})),
+  // eslint-disable-next-line react/require-default-props
+  exportCSV: PropTypes.func,
 }
