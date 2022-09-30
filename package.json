@@ -44,6 +44,6 @@
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-loader-spinner": "^2.3.0",
-    "recharts": "^1.8.5"
+    "recharts": "^2.1.14"
   }
 }
